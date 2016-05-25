@@ -51,18 +51,18 @@ echo ' | ' . sprintf( __( 'Page %s', 'devtheme' ), max( $paged, $page ) );
 
 <div id="page" class="hfeed site container-fluid">
 <div class="container">
-<div class="row">
+<header id="masthead" class="site-header row" role="banner">
 
-     <header id="masthead" class="site-header col-md-12" role="banner">
+     <section class="col-md-12">
          
      <h1 class="site-title"><a href="<?php echo home_url( '/' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-     <h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>	 
-	 </header><!-- #masthead .site-header -->
-	  <nav role="navigation" class="site-navigation main-navigation col-md-12">
+ <h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>	 
+	 </section><!-- #masthead .site-header -->
+	  <nav role="navigation" class="site-navigation main-navigation col-md-12 navbar navbar-inverse">
     
-     <?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
+     <?php wp_nav_menu( array( 'theme_location' => 'primary','menu_class'=> 'nav navbar-nav') ); ?>
 </nav><!-- .site-navigation .main-navigation -->
-</div>
+</header>
 </div>
 
 <div class="row">		
