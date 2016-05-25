@@ -14,7 +14,7 @@
 if ( ! isset( $content_width ) )
     $content_width = 654; /* pixels */
 
-if ( ! function_exists( 'dev-theme_setup' ) ):
+if ( ! function_exists( 'devtheme_setup' ) ):
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
@@ -24,7 +24,7 @@ if ( ! function_exists( 'dev-theme_setup' ) ):
  *
  * @since Shape 1.0
  */
-function dev-theme_setup() {
+function devtheme_setup() {
  
     /**
      * Custom template tags for this theme.
@@ -42,7 +42,7 @@ function dev-theme_setup() {
      * If you're building a theme based on Shape, use a find and replace
      * to change 'Dev-theme' to the name of your theme in all the template files
      */
-    load_theme_textdomain( 'dev-theme', get_template_directory() . '/languages' );
+    load_theme_textdomain( 'devtheme', get_template_directory() . '/languages' );
  
     /**
      * Add default posts and comments RSS feed links to head
@@ -58,16 +58,16 @@ function dev-theme_setup() {
      * This theme uses wp_nav_menu() in one location.
      */
     register_nav_menus( array(
-        'primary' => __( 'Primary Menu', 'dev-theme' ),
+        'primary' => __( 'Primary Menu', 'devtheme' ),
     ) );
 }
 endif; // Dev-theme_setup
-add_action( 'after_setup_theme', 'dev-theme_setup' );
+add_action( 'after_setup_theme', 'devtheme_setup' );
 
 /**
  * Enqueue scripts and styles
  */
-function dev-theme_scripts() {
+function devtheme_scripts() {
     wp_enqueue_style( 'style', get_stylesheet_uri() );
  
     if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -80,4 +80,13 @@ function dev-theme_scripts() {
         wp_enqueue_script( 'keyboard-image-navigation', get_template_directory_uri() . '/js/keyboard-image-navigation.js', array( 'jquery' ), '20120202' );
     }
 }
-add_action( 'wp_enqueue_scripts', 'dev-theme_scripts' );
+add_action( 'wp_enqueue_scripts', 'devtheme_scripts' );
+
+function bootstrap_enqueue() {
+    wp_register_script( 'bootstrap-js', '://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', array('jquery'), NULL, true );
+    wp_register_style( 'bootstrap-css', '://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', false, NULL, 'all' );
+
+    wp_enqueue_script( 'bootstrap-js' );
+    wp_enqueue_style( 'bootstrap-css' );
+}
+add_action( 'wp_enqueue_scripts', 'bootstrap_enqueue' );

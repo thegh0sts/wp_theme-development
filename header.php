@@ -56,8 +56,8 @@ echo ' | ' . sprintf( __( 'Page %s', 'shape' ), max( $paged, $page ) );
      <h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
 </hgroup>
          <nav role="navigation" class="site-navigation main-navigation">
-     <h1 class="assistive-text"><?php _e( 'Menu', 'dev-theme' ); ?></h1>
-     <div class="assistive-text skip-link"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'dev-theme' ); ?>"><?php _e( 'Skip to content', 'dev-theme' ); ?></a></div>
+     <h1 class="assistive-text"><?php _e( 'Menu', 'devtheme' ); ?></h1>
+     <div class="assistive-text skip-link"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'devtheme' ); ?>"><?php _e( 'Skip to content', 'devtheme' ); ?></a></div>
      <?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
 </nav><!-- .site-navigation .main-navigation -->
     
