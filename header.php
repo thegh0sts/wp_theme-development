@@ -36,7 +36,7 @@ echo " | $site_description";
  
 // Add a page number if necessary:
 if ( $paged >= 2 || $page >= 2 )
-echo ' | ' . sprintf( __( 'Page %s', 'shape' ), max( $paged, $page ) );
+echo ' | ' . sprintf( __( 'Page %s', 'devtheme' ), max( $paged, $page ) );
  
 ?></title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
@@ -49,17 +49,24 @@ echo ' | ' . sprintf( __( 'Page %s', 'shape' ), max( $paged, $page ) );
  
 <body <?php body_class(); ?>>
 
-<div id="page" class="hfeed site">
-     <header id="masthead" class="site-header" role="banner">
-         <hgroup>
+<div id="page" class="hfeed site container-fluid">
+<div class="container">
+<div class="row">
+
+     <header id="masthead" class="site-header col-md-12" role="banner">
+         
      <h1 class="site-title"><a href="<?php echo home_url( '/' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-     <h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
-</hgroup>
-         <nav role="navigation" class="site-navigation main-navigation">
+     <h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>	 
+	 </header><!-- #masthead .site-header -->
+	  <nav role="navigation" class="site-navigation main-navigation col-md-12">
     
      <?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
 </nav><!-- .site-navigation .main-navigation -->
-    
+</div>
+</div>
 
-	 </header><!-- #masthead .site-header -->
-<div id="main" class="site-main">
+<div class="row">		
+        
+</div>    
+
+<div id="main" class="site-main container">

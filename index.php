@@ -13,8 +13,8 @@
  */
  
 get_header(); ?>
-<div id="primary" class="content-area">
-    <div id="content" class="site-content" role="main">
+
+    <div id="content" class="site-content row" role="main">
 <?php if ( have_posts() ) : ?>
 <?php devtheme_content_nav( 'nav-above' ); ?>
      <?php /* Start the Loop */ ?>
@@ -34,6 +34,6 @@ get_header(); ?>
      <?php get_template_part( 'no-results', 'index' ); ?>
 <?php endif; ?>
 </div><!-- #content .site-content -->
-</div><!-- #primary .content-area -->
+
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>

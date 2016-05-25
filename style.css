@@ -1,3 +1,6 @@
 /**/
-
-#page {border:1px solid green}
+nav {outline: 1px solid blue}
+#page {outline:1px solid green}
+header {outline:1px solid black}
+article {outline:1px solid red}
+#primary {outline:1px solid orange}
