@@ -76,4 +76,4 @@ echo ' | ' . sprintf( __( 'Page %s', 'devtheme' ), max( $paged, $page ) );
         
 </div>    
 
-<div id="main" class="site-main container">
+<div id="main" class="site-main <?php echo $theme_layout = get_option('theme_layout');?>">

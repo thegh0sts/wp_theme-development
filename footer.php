@@ -16,8 +16,10 @@
         <?php do_action( 'devtheme_credits' ); ?>
         <a href="http://wordpress.org/" title="<?php esc_attr_e( 'A Semantic Personal Publishing Platform', 'devtheme' ); ?>" rel="generator"><?php printf( __( 'Proudly powered by %s', 'devtheme' ), 'WordPress' ); ?></a>
         <span class="sep"> | </span>
-        <?php printf( __( 'Theme: %1$s by %2$s.', 'devtheme' ), 'Dev-theme', '<a href="https://themedevthemer.com/" rel="designer">ThemeDev-themer</a>' ); ?>
-    </div><!-- .site-info -->
+        <?php printf( __( 'Theme: %1$s by %2$s.', 'devtheme' ), 'Dev-theme', '<a href="https://themedevthemer.com/" rel="designer">ThemeDev-themer</a>' ); $facebook_url = get_option('facebook_url');
+echo $twitter_url = get_option('twitter_url');?>
+    
+	</div><!-- .site-info -->
 </footer><!-- #colophon .site-footer -->
 </div><!-- #page .hfeed .site -->
  
