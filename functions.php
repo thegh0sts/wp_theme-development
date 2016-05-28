@@ -1,60 +1,62 @@
 <?php
-/**
- * Dev-theme functions and definitions
- *
- * @package Dev-theme
- * @since Dev-theme 1.0
- */
+//
+// Dev-theme functions and definitions
+//
+// @package Dev-theme
+// @since Dev-theme 1.0
+//
  
- /**
- * Set the content width based on the theme's design and stylesheet.
- *
- * @since Dev-theme 1.0
- */
+//
+// Set the content width based on the theme's design and stylesheet.
+//
+// @since Dev-theme 1.0
+//
+ 
+
 
 if ( ! function_exists( 'devtheme_setup' ) ):
-/**
- * Sets up theme defaults and registers support for various WordPress features.
- *
- * Note that this function is hooked into the after_setup_theme hook, which runs
- * before the init hook. The init hook is too late for some features, such as indicating
- * support post thumbnails.
- *
- * @since Dev-theme 1.0
- */
+//
+// Sets up theme defaults and registers support for various WordPress features.
+//
+// Note that this function is hooked into the after_setup_theme hook, which runs
+// before the init hook. The init hook is too late for some features, such as indicating
+// support post thumbnails.
+//
+// @since Dev-theme 1.0
+//
 function devtheme_setup() {
  
-    /**
-     * Custom template tags for this theme.
-     */
+    //
+     // Custom template tags for this theme.
+     //
     require( get_template_directory() . '/inc/template-tags.php' );
  
-    /**
-     * Custom functions that act independently of the theme templates
-     */
+    //
+     // Custom functions that act independently of the theme templates
+     //
     require( get_template_directory() . '/inc/tweaks.php' );
  
-    /**
-     * Make theme available for translation
-     * Translations can be filed in the /languages/ directory
-     * If you're building a theme based on Dev-theme, use a find and replace
-     * to change 'Dev-theme' to the name of your theme in all the template files
-     */
+    //
+     // Make theme available for translation
+     // Translations can be filed in the /languages/ directory
+     // If you're building a theme based on Dev-theme, use a find and replace
+     // to change 'Dev-theme' to the name of your theme in all the template files
+     //
     load_theme_textdomain( 'devtheme', get_template_directory() . '/languages' );
  
-    /**
-     * Add default posts and comments RSS feed links to head
-     */
+    //
+     // Add default posts and comments RSS feed links to head
+     //
     add_theme_support( 'automatic-feed-links' );
  
-    /**
-     * Enable support for the Aside Post Format
-     */
+    //
+     // Enable support for the Aside Post Format
+     //
     add_theme_support( 'post-formats', array( 'aside' ) );
  
-    /**
-     * This theme uses wp_nav_menu() in one location.
-     */
+    //
+     // This theme uses wp_nav_menu() in one location.
+     //
     register_nav_menus( array(
         'primary' => __( 'Primary Menu', 'devtheme' ),
     ) );
@@ -62,11 +64,11 @@ function devtheme_setup() {
 endif; // Dev-theme_setup
 add_action( 'after_setup_theme', 'devtheme_setup' );
 
-/**
- * Register widgetized area and update sidebar with default widgets
- *
- * @since Dev-theme 1.0
- */
+//
+ // Register widgetized area and update sidebar with default widgets
+ //
+ // @since Dev-theme 1.0
+ //
 function devtheme_widgets_init() {
     register_sidebar( array(
         'name' => __( 'Primary Widget Area', 'devtheme' ),
@@ -88,9 +90,9 @@ function devtheme_widgets_init() {
 }
 add_action( 'widgets_init', 'devtheme_widgets_init' );
 
-/**
- * Enqueue scripts and styles
- */
+//
+// Enqueue scripts and styles
+//
 function devtheme_scripts() {
     wp_enqueue_style( 'style', get_stylesheet_uri() );
  
@@ -125,17 +127,17 @@ function bootstrap_enqueue() {
 }
 add_action( 'wp_enqueue_scripts', 'bootstrap_enqueue' );
 
-/**
- * Setup the WordPress core custom background feature.
- *
- * Use add_theme_support to register support for WordPress 3.4+
- * as well as provide backward compatibility for previous versions.
- * Use feature detection of wp_get_theme() which was introduced
- * in WordPress 3.4.
- *
- * Hooks into the after_setup_theme action.
- *
- */
+//
+// Setup the WordPress core custom background feature.
+//
+// Use add_theme_support to register support for WordPress 3.4+
+// as well as provide backward compatibility for previous versions.
+// Use feature detection of wp_get_theme() which was introduced
+// in WordPress 3.4.
+ //
+ // Hooks into the after_setup_theme action.
+ //
+ //
 function devtheme_register_custom_background() {
     $args = array(
         'default-color' => 'e9e0d1',
@@ -153,51 +155,185 @@ function devtheme_register_custom_background() {
 }
 add_action( 'after_setup_theme', 'devtheme_register_custom_background' );
  
-/**
- * Implement the Custom Header feature
- */
+//
+// Implement the Custom Header feature
+//
 require( get_template_directory() . '/inc/custom-header.php' );
 
-/**
- * theme options test ???
- */
+//
+// theme options test ???
+//
  
+// ----------------------------------------------------------------------------- ///
+// Add Menu Page ///
+// ----------------------------------------------------------------------------- /// 
 
- 
- function theme_settings_page(){
-	 
-	 ?>
-	    <div class="wrap">
-	    <h1>WordPress Theme Development - Theme Options</h1>
-	    <form method="post" action="options.php">
-	        <?php
-	            settings_fields("section");
-	            do_settings_sections("theme-options");      
-	            submit_button(); 
-	        ?>          
-	    </form>
-		</div>
-	<?php
-	 
- }
- 
- function display_twitter_element()
-{
-	?>
-    	<input type="text" name="twitter_url" id="twitter_url" value="<?php echo get_option('twitter_url'); ?>" />
-    <?php
+function add_my_menu() {
+    add_menu_page (
+        'Theme Options', // page title 
+        'Theme Options', // menu title
+        'manage_options', // capability
+        'theme-options',  // menu-slug
+        'my_menu_page',   // function that will render its output
+        get_template_directory_uri() . '/assets/ico/theme-option-menu-icon.png'   // link to the icon that will be displayed in the sidebar
+        //$position,    // position of the menu option
+    );
+}
+add_action('admin_menu', 'add_my_menu');
+function my_menu_page() {
+        ?>
+        <?php  
+        if( isset( $_GET[ 'tab' ] ) ) {  
+            $active_tab = $_GET[ 'tab' ];  
+        } else {
+            $active_tab = 'tab_one';
+        }
+        ?>  
+        <div class="wrap">
+            <h2>Menu Page Title</h2>
+            <div class="description">This is description of the page.</div>
+            <?php settings_errors(); ?> 
+
+            <h2 class="nav-tab-wrapper">  
+                <a href="?page=theme-options&tab=tab_one" class="nav-tab <?php echo $active_tab == 'tab_one' ? 'nav-tab-active' : ''; ?>">General</a>  
+                <a href="?page=theme-options&tab=tab_two" class="nav-tab <?php echo $active_tab == 'tab_two' ? 'nav-tab-active' : ''; ?>">Responsive / Layout</a>  
+            </h2>  
+
+            <form method="post" action="options.php"> 
+            <?php
+                if( $active_tab == 'tab_one' ) {  
+
+                    settings_fields( 'general-group' );
+                    do_settings_sections( 'general' );
+
+                } elseif( $active_tab == 'tab_two' )  {
+
+                    settings_fields( 'responsive-layout-group' );
+                    do_settings_sections( 'responsive-layout' );
+
+                }
+            ?>
+
+                <?php submit_button(); ?> 
+            </form> 
+
+        </div>
+        <?php
 }
 
-function display_facebook_element()
-{
-	?>
-    	<input type="text" name="facebook_url" id="facebook_url" value="<?php echo get_option('facebook_url'); ?>" />
-    <?php
-}
+// ----------------------------------------------------------------------------- ///
+// Setting Sections And Fields ///
+// ----------------------------------------------------------------------------- /// 
 
-function display_layout_element()
-{
-      $theme_array = array ('Boxed' => 'container','Wide'=>'container-fluid');
+function sandbox_initialize_theme_options() {  
+    add_settings_section(  
+        'page_1_section',         // ID used to identify this section and with which to register options  
+        'General Settings',                  // Title to be displayed on the administration page  
+        'page_1_section_callback', // Callback used to render the description of the section  
+        'general'                           // Page on which to add this section of options  
+
+    );
+
+    add_settings_section(  
+        'page_2_section',         // ID used to identify this section and with which to register options  
+        'Responsive / Layout Settings',                  // Title to be displayed on the administration page  
+        'page_2_section_callback', // Callback used to render the description of the section  
+        'responsive-layout'                           // Page on which to add this section of options  
+    );
+
+// ----------------------------------------------------------------------------- ///
+// Fields - General Settings ///
+// ----------------------------------------------------------------------------- ///    
+
+// Code in <head> tag ///     
+
+    add_settings_field (   
+        'code_head',  // ID -- ID used to identify the field throughout the theme  
+        'Enter your custom code that belongs in the head tag.', // LABEL -- The label to the left of the option interface element  
+        'code_head_callback', // CALLBACK FUNCTION -- The name of the function responsible for rendering the option interface  
+        'general', // MENU PAGE SLUG -- The page on which this option will be displayed  
+        'page_1_section', // SECTION ID -- The name of the section to which this field belongs  
+        array( // The array of arguments to pass to the callback. In this case, just a description.  
+            'Do not include script tags.', // DESCRIPTION -- The description of the field.
+        )  
+    );
+    register_setting(  
+        'general-group',  
+        'code_head'  
+    );
+	
+// Code in <body> tag ///     
+
+    add_settings_field (   
+        'code_body',  // ID -- ID used to identify the field throughout the theme  
+        'Enter your custom code that belongs before the end body tag.', // LABEL -- The label to the left of the option interface element  
+        'code_body_callback', // CALLBACK FUNCTION -- The name of the function responsible for rendering the option interface  
+        'general', // MENU PAGE SLUG -- The page on which this option will be displayed  
+        'page_1_section', // SECTION ID -- The name of the section to which this field belongs  
+        array( // The array of arguments to pass to the callback. In this case, just a description.  
+            'Do not include script tags.', // DESCRIPTION -- The description of the field.
+        )  
+    );
+    register_setting(  
+        'general-group',  
+        'code_body'  
+    );
+	
+// ----------------------------------------------------------------------------- ///
+// Fields - Responsive / Layout Settings ///
+// ----------------------------------------------------------------------------- ///   
+
+// Wide or Boxed layout /// 
+
+    add_settings_field (   
+        'theme_layout',  // ID -- ID used to identify the field throughout the theme  
+        'Do you want a Wide or Boxed layout?', // LABEL -- The label to the left of the option interface element  
+        'responsive_layout_callback', // CALLBACK FUNCTION -- The name of the function responsible for rendering the option interface  
+        'responsive-layout', // MENU PAGE SLUG -- The page on which this option will be displayed  
+        'page_2_section', // SECTION ID -- The name of the section to which this field belongs  
+        array( // The array of arguments to pass to the callback. In this case, just a description.  
+            'This is the description of the option 3', // DESCRIPTION -- The description of the field.
+        )  
+    );
+    register_setting(  
+        'responsive-layout-group',  
+        'theme_layout'  
+    );
+
+} // function sandbox_initialize_theme_options
+add_action('admin_init', 'sandbox_initialize_theme_options');
+
+function page_1_section_callback() {  
+    echo '<p>Section Description here</p>';  
+} // function page_1_section_callback
+function page_2_section_callback() {  
+    echo '<p>This theme is designed to be responsive and therefore any responsive nature cannot be disabled.</p>';  
+} // function page_1_section_callback
+
+// ----------------------------------------------------------------------------- ///
+// Field Callbacks - General Settings ///
+// ----------------------------------------------------------------------------- /// 
+
+function code_body_callback($args) {  
+    ?>
+    <textarea id="code_body" class="code_body" name="code_body" rows="5" cols="50"><?php echo get_option('code_body') ?></textarea>
+    <p class="description code_body"> <?php echo $args[0] ?> </p>
+    <?php      
+} // end sandbox_toggle_header_callback 
+
+function code_head_callback($args) {  
+    ?>
+    <textarea id="code_head" class="code_head" name="code_head" rows="5" cols="50"><?php echo get_option('code_head') ?></textarea>
+    <p class="description code_head"> <?php echo $args[0] ?> </p>
+    <?php      
+} // end sandbox_toggle_header_callback  
+
+// ----------------------------------------------------------------------------- ///
+// Field Callbacks - Responsive / Layout Settings ///
+// ----------------------------------------------------------------------------- /// 
+
+function responsive_layout_callback($args) {  
+     $theme_array = array ('Boxed' => 'container','Wide'=>'container-fluid');
 	 $theme_setting = get_option('theme_layout');
 	?>
 	<select name="theme_layout">
@@ -208,28 +344,21 @@ function display_layout_element()
 	<?php
 	}?>
 	</select>
-	<?php
-	
+	<?php     
+} // end sandbox_toggle_header_callback  
+
+// ----------------------------------------------------------------------------- ///
+// Shortcode registration ///
+// ----------------------------------------------------------------------------- /// 
+//[one_half]
+function one_half_shortcode( $atts, $content = null ) {
+	return '<div class="col-md-6">' . $content . '</div>';
 }
+add_shortcode( 'one_half', 'one_half_shortcode' );
 
-function display_theme_panel_fields()
-{
-	add_settings_section("section", "All Settings", null, "theme-options");
-	
-	add_settings_field("twitter_url", "Twitter Profile Url", "display_twitter_element", "theme-options", "section");
-    add_settings_field("facebook_url", "Facebook Profile Url", "display_facebook_element", "theme-options", "section");
-    add_settings_field("theme_layout", "Do you want a boxed or wide layout?", "display_layout_element", "theme-options", "section");
-
-    register_setting("section", "twitter_url");
-    register_setting("section", "facebook_url");
-    register_setting("section", "theme_layout");
+//[one_quarter]
+function one_quarter_shortcode( $atts, $content = null ) {
+	return '<div class="col-md-3">' . $content . '</div>';
 }
-
-add_action("admin_init", "display_theme_panel_fields");
-
-function add_theme_menu_item()
-{
-	add_menu_page("Theme Options", "Theme Options", "manage_options", "theme-options", "theme_settings_page", null, 99);
-}
-
-add_action("admin_menu", "add_theme_menu_item");
+add_shortcode( 'one_quarter', 'one_quarter_shortcode' );
+ 

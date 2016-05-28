@@ -24,6 +24,8 @@ echo $twitter_url = get_option('twitter_url');?>
 </div><!-- #page .hfeed .site -->
  
 <?php wp_footer(); ?>
- 
+ <script>
+ <?php echo $code_body = get_option('code_body');?>
+ </script>
 </body>
 </html>
