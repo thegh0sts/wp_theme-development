@@ -21,9 +21,12 @@ echo $twitter_url = get_option('twitter_url');?>
     
 	</div><!-- .site-info -->
 </footer><!-- #colophon .site-footer -->
+</div>
 </div><!-- #page .hfeed .site -->
  
 <?php wp_footer(); ?>
- 
+ <script>
+ <?php echo $body_code = get_option('general_body_code');?>
+ </script>
 </body>
 </html>

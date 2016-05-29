@@ -44,15 +44,24 @@ echo ' | ' . sprintf( __( 'Page %s', 'devtheme' ), max( $paged, $page ) );
 <!--[if lt IE 9]>
 <script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"></script>
 <![endif]-->
+
+<script id="head_code">
+<?php echo $head_code = get_option('general_head_code');?>
+</script>
+
+<script id="google_analytics">
+<?php echo $ga = get_option('general_ga_code');?>
+</script>
+
 <?php wp_head(); ?>
 </head>
  
 <body <?php body_class(); ?>>
 
 <div id="page" class="hfeed site container-fluid">
-<div class="container">
-<header id="masthead" class="site-header row" role="banner">
-
+<div class="row">
+<header id="masthead" class="site-header <?php echo $responsive_header_width = get_option('responsive_header_width');?>" role="banner">
+<div class="row">
      <section class="col-md-12">
          
      <h1 class="site-title"><a href="<?php echo home_url( '/' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
@@ -69,11 +78,7 @@ echo ' | ' . sprintf( __( 'Page %s', 'devtheme' ), max( $paged, $page ) );
             </a>
 <?php } // if ( ! empty( $header_image ) )
 ?>
-</header>
 </div>
+</header>
 
-<div class="row">		
-        
-</div>    
-
-<div id="main" class="site-main <?php echo $theme_layout = get_option('theme_layout');?>">
+<div id="main" class="site-main <?php echo $responsive_body_width = get_option('responsive_body_width');?>">
