@@ -160,6 +160,10 @@ add_action( 'after_setup_theme', 'devtheme_register_custom_background' );
 //
 require( get_template_directory() . '/inc/custom-header.php' );
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> e114004cef74632b9fef0ceb140e30cb08205a39
 add_action('admin_menu', 'ch_essentials_admin');
 function ch_essentials_admin() {
     /* Base Menu */
@@ -241,6 +245,7 @@ add_settings_field(
 register_setting('responsive_settings', 'responsive_header_width');
 register_setting('responsive_settings', 'responsive_body_width');
 
+<<<<<<< HEAD
 add_settings_section( 
     'all_extra_settings_page',
     'Extra Options',
@@ -258,8 +263,48 @@ add_settings_field(
 
 register_setting('extra_settings', 'extra_custom_css');
 
-}
+=======
+=======
+//
+// theme options test ???
+//
+ 
+// ----------------------------------------------------------------------------- ///
+// Add Menu Page ///
+// ----------------------------------------------------------------------------- /// 
 
+function add_my_menu() {
+    add_menu_page (
+        'Theme Options', // page title 
+        'Theme Options', // menu title
+        'manage_options', // capability
+        'theme-options',  // menu-slug
+        'my_menu_page',   // function that will render its output
+        get_template_directory_uri() . '/assets/ico/theme-option-menu-icon.png'   // link to the icon that will be displayed in the sidebar
+        //$position,    // position of the menu option
+    );
+>>>>>>> df453d3a3b4f2d3bab54a66ae71ab1014abc57dc
+>>>>>>> e114004cef74632b9fef0ceb140e30cb08205a39
+}
+add_action('admin_menu', 'add_my_menu');
+function my_menu_page() {
+        ?>
+        <?php  
+        if( isset( $_GET[ 'tab' ] ) ) {  
+            $active_tab = $_GET[ 'tab' ];  
+        } else {
+            $active_tab = 'tab_one';
+        }
+        ?>  
+        <div class="wrap">
+            <h2>Menu Page Title</h2>
+            <div class="description">This is description of the page.</div>
+            <?php settings_errors(); ?> 
+
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> e114004cef74632b9fef0ceb140e30cb08205a39
 /* Call Backs
 -----------------------------------------------------------------*/
 function general_settings_callback() { 
@@ -270,10 +315,13 @@ function responsive_settings_callback() {
     echo '<p>Responsive / Layout Options:</p>'; 
 }
 
+<<<<<<< HEAD
 function extra_settings_callback() { 
     echo '<p>Extra Options:</p>'; 
 }
 
+=======
+>>>>>>> e114004cef74632b9fef0ceb140e30cb08205a39
 function general_head_code_callback($args) { 
 
   //  $general_head_code = get_option('head_code'); 
@@ -284,6 +332,7 @@ function general_head_code_callback($args) {
     <?php 
 
 
+<<<<<<< HEAD
 }
 
 function general_body_code_callback($args) { 
@@ -314,6 +363,181 @@ function responsive_header_width_callback($args){
 	
 	  $dd_header_width = array ('Boxed' => 'container','Wide'=>'container-fluid');
 	 $header_width_setting = get_option('responsive_header_width');
+=======
+}
+
+function general_body_code_callback($args) { 
+
+  //  $general_head_code = get_option('head_code'); 
+
+    ?>
+    <textarea id="general_body_code" class="general_body_code" name="general_body_code" rows="5" cols="50"><?php echo get_option('general_body_code') ?></textarea>
+    <p class="description general_body_code"> <?php echo $args[0] ?> </p>
+    <?php 
+
+
+}
+
+function general_ga_code_callback($args) { 
+
+  //  $general_head_code = get_option('head_code'); 
+
+    ?>
+    <textarea id="general_ga_code" class="general_ga_code" name="general_ga_code" rows="5" cols="50"><?php echo get_option('general_ga_code') ?></textarea>
+    <p class="description general_ga_code"> <?php echo $args[0] ?> </p>
+    <?php 
+
+
+}
+
+function responsive_header_width_callback($args){
+	
+	  $dd_header_width = array ('Boxed' => 'container','Wide'=>'container-fluid');
+	 $header_width_setting = get_option('responsive_header_width');
+=======
+            <h2 class="nav-tab-wrapper">  
+                <a href="?page=theme-options&tab=tab_one" class="nav-tab <?php echo $active_tab == 'tab_one' ? 'nav-tab-active' : ''; ?>">General</a>  
+                <a href="?page=theme-options&tab=tab_two" class="nav-tab <?php echo $active_tab == 'tab_two' ? 'nav-tab-active' : ''; ?>">Responsive / Layout</a>  
+            </h2>  
+
+            <form method="post" action="options.php"> 
+            <?php
+                if( $active_tab == 'tab_one' ) {  
+
+                    settings_fields( 'general-group' );
+                    do_settings_sections( 'general' );
+
+                } elseif( $active_tab == 'tab_two' )  {
+
+                    settings_fields( 'responsive-layout-group' );
+                    do_settings_sections( 'responsive-layout' );
+
+                }
+            ?>
+
+                <?php submit_button(); ?> 
+            </form> 
+
+        </div>
+        <?php
+}
+
+// ----------------------------------------------------------------------------- ///
+// Setting Sections And Fields ///
+// ----------------------------------------------------------------------------- /// 
+
+function sandbox_initialize_theme_options() {  
+    add_settings_section(  
+        'page_1_section',         // ID used to identify this section and with which to register options  
+        'General Settings',                  // Title to be displayed on the administration page  
+        'page_1_section_callback', // Callback used to render the description of the section  
+        'general'                           // Page on which to add this section of options  
+
+    );
+
+    add_settings_section(  
+        'page_2_section',         // ID used to identify this section and with which to register options  
+        'Responsive / Layout Settings',                  // Title to be displayed on the administration page  
+        'page_2_section_callback', // Callback used to render the description of the section  
+        'responsive-layout'                           // Page on which to add this section of options  
+    );
+
+// ----------------------------------------------------------------------------- ///
+// Fields - General Settings ///
+// ----------------------------------------------------------------------------- ///    
+
+// Code in <head> tag ///     
+
+    add_settings_field (   
+        'code_head',  // ID -- ID used to identify the field throughout the theme  
+        'Enter your custom code that belongs in the head tag.', // LABEL -- The label to the left of the option interface element  
+        'code_head_callback', // CALLBACK FUNCTION -- The name of the function responsible for rendering the option interface  
+        'general', // MENU PAGE SLUG -- The page on which this option will be displayed  
+        'page_1_section', // SECTION ID -- The name of the section to which this field belongs  
+        array( // The array of arguments to pass to the callback. In this case, just a description.  
+            'Do not include script tags.', // DESCRIPTION -- The description of the field.
+        )  
+    );
+    register_setting(  
+        'general-group',  
+        'code_head'  
+    );
+	
+// Code in <body> tag ///     
+
+    add_settings_field (   
+        'code_body',  // ID -- ID used to identify the field throughout the theme  
+        'Enter your custom code that belongs before the end body tag.', // LABEL -- The label to the left of the option interface element  
+        'code_body_callback', // CALLBACK FUNCTION -- The name of the function responsible for rendering the option interface  
+        'general', // MENU PAGE SLUG -- The page on which this option will be displayed  
+        'page_1_section', // SECTION ID -- The name of the section to which this field belongs  
+        array( // The array of arguments to pass to the callback. In this case, just a description.  
+            'Do not include script tags.', // DESCRIPTION -- The description of the field.
+        )  
+    );
+    register_setting(  
+        'general-group',  
+        'code_body'  
+    );
+	
+// ----------------------------------------------------------------------------- ///
+// Fields - Responsive / Layout Settings ///
+// ----------------------------------------------------------------------------- ///   
+
+// Wide or Boxed layout /// 
+
+    add_settings_field (   
+        'theme_layout',  // ID -- ID used to identify the field throughout the theme  
+        'Do you want a Wide or Boxed layout?', // LABEL -- The label to the left of the option interface element  
+        'responsive_layout_callback', // CALLBACK FUNCTION -- The name of the function responsible for rendering the option interface  
+        'responsive-layout', // MENU PAGE SLUG -- The page on which this option will be displayed  
+        'page_2_section', // SECTION ID -- The name of the section to which this field belongs  
+        array( // The array of arguments to pass to the callback. In this case, just a description.  
+            'This is the description of the option 3', // DESCRIPTION -- The description of the field.
+        )  
+    );
+    register_setting(  
+        'responsive-layout-group',  
+        'theme_layout'  
+    );
+
+} // function sandbox_initialize_theme_options
+add_action('admin_init', 'sandbox_initialize_theme_options');
+
+function page_1_section_callback() {  
+    echo '<p>Section Description here</p>';  
+} // function page_1_section_callback
+function page_2_section_callback() {  
+    echo '<p>This theme is designed to be responsive and therefore any responsive nature cannot be disabled.</p>';  
+} // function page_1_section_callback
+
+// ----------------------------------------------------------------------------- ///
+// Field Callbacks - General Settings ///
+// ----------------------------------------------------------------------------- /// 
+
+function code_body_callback($args) {  
+    ?>
+    <textarea id="code_body" class="code_body" name="code_body" rows="5" cols="50"><?php echo get_option('code_body') ?></textarea>
+    <p class="description code_body"> <?php echo $args[0] ?> </p>
+    <?php      
+} // end sandbox_toggle_header_callback 
+
+function code_head_callback($args) {  
+    ?>
+    <textarea id="code_head" class="code_head" name="code_head" rows="5" cols="50"><?php echo get_option('code_head') ?></textarea>
+    <p class="description code_head"> <?php echo $args[0] ?> </p>
+    <?php      
+} // end sandbox_toggle_header_callback  
+
+// ----------------------------------------------------------------------------- ///
+// Field Callbacks - Responsive / Layout Settings ///
+// ----------------------------------------------------------------------------- /// 
+
+function responsive_layout_callback($args) {  
+     $theme_array = array ('Boxed' => 'container','Wide'=>'container-fluid');
+	 $theme_setting = get_option('theme_layout');
+>>>>>>> df453d3a3b4f2d3bab54a66ae71ab1014abc57dc
+>>>>>>> e114004cef74632b9fef0ceb140e30cb08205a39
 	?>
 	<select name="responsive_header_width">
 	<?php
@@ -323,6 +547,7 @@ function responsive_header_width_callback($args){
 	<?php
 	}?>
 	</select>
+<<<<<<< HEAD
 	<?php    
 	
 }
@@ -340,10 +565,14 @@ function responsive_body_width_callback($args){
 	<?php
 	}?>
 	</select>
+=======
+<<<<<<< HEAD
+>>>>>>> e114004cef74632b9fef0ceb140e30cb08205a39
 	<?php    
 	
 }
 
+<<<<<<< HEAD
 function extra_custom_css_callback($args) { 
 
   //  $general_head_code = get_option('head_code'); 
@@ -361,8 +590,58 @@ $file = file_get_contents(get_template_directory_uri() . "/css/custom.css");
 	//}
 	
 
-}
+=======
+function responsive_body_width_callback($args){
+	
+	  $dd_body_width = array ('Boxed' => 'container','Wide'=>'container-fluid');
+	 $body_width_setting = get_option('responsive_body_width');
+	?>
+	<select name="responsive_body_width">
+	<?php
+	foreach ($dd_body_width as $body_key => $width_setting){
+	?>
+	<option value="<?php echo $width_setting; ?>" <?php if ($body_width_setting == $width_setting) {echo 'selected';}?>><?php echo $body_key;?></option>
+	<?php
+	}?>
+	</select>
+	<?php    
+	
+=======
+	<?php     
+} // end sandbox_toggle_header_callback  
 
+// ----------------------------------------------------------------------------- ///
+// Shortcode registration ///
+// ----------------------------------------------------------------------------- /// 
+//[one_half]
+function one_half_shortcode( $atts, $content = null ) {
+	return '<div class="col-md-6">' . $content . '</div>';
+>>>>>>> df453d3a3b4f2d3bab54a66ae71ab1014abc57dc
+>>>>>>> e114004cef74632b9fef0ceb140e30cb08205a39
+}
+add_shortcode( 'one_half', 'one_half_shortcode' );
+
+<<<<<<< HEAD
+/* Display Page
+-----------------------------------------------------------------*/
+function ch_essentials_index() {
+?>
+    <div class="wrap">  
+        <div id="icon-themes" class="icon32"></div>  
+        <h2>Essentials Theme Options</h2>  
+        <?php settings_errors(); ?>  
+
+        <?php  
+                $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'all_general_settings_page';  
+        ?>  
+
+        <h2 class="nav-tab-wrapper">  
+            <a href="?page=ch-essentials-options&tab=all_general_settings_page" class="nav-tab <?php echo $active_tab == 'all_general_settings_page' ? 'nav-tab-active' : ''; ?>">General Options</a>  
+            <a href="?page=ch-essentials-options&tab=all_responsive_settings_page" class="nav-tab <?php echo $active_tab == 'all_responsive_settings_page' ? 'nav-tab-active' : ''; ?>">Responsive / Layout Options</a>  
+        </h2>  
+
+
+<<<<<<< HEAD
 /* Display Page
 -----------------------------------------------------------------*/
 function ch_essentials_index() {
@@ -385,6 +664,10 @@ function ch_essentials_index() {
 
         <form method="post" action="options.php">  
 
+=======
+        <form method="post" action="options.php">  
+
+>>>>>>> e114004cef74632b9fef0ceb140e30cb08205a39
             <?php 
             if( $active_tab == 'all_general_settings_page' ) {  
                 settings_fields( 'general_settings' );
@@ -393,10 +676,13 @@ function ch_essentials_index() {
                 settings_fields( 'responsive_settings' );
                 do_settings_sections( 'responsive_settings' ); 
 
+<<<<<<< HEAD
             }else if( $active_tab == 'all_extra_settings_page' ) {
                 settings_fields( 'extra_settings' );
                 do_settings_sections( 'extra_settings' ); 
 
+=======
+>>>>>>> e114004cef74632b9fef0ceb140e30cb08205a39
             }
             ?>             
             <?php submit_button(); ?>  
@@ -411,4 +697,16 @@ function ch_essentials_index() {
 function one_half_shortcode( $atts, $content = null ) {
 	return '<div class="col-md-6">' . $content . '</div>';
 }
+<<<<<<< HEAD
 add_shortcode( 'one_half', 'one_half_shortcode' );
+=======
+add_shortcode( 'one_half', 'one_half_shortcode' );
+=======
+//[one_quarter]
+function one_quarter_shortcode( $atts, $content = null ) {
+	return '<div class="col-md-3">' . $content . '</div>';
+}
+add_shortcode( 'one_quarter', 'one_quarter_shortcode' );
+ 
+>>>>>>> df453d3a3b4f2d3bab54a66ae71ab1014abc57dc
+>>>>>>> e114004cef74632b9fef0ceb140e30cb08205a39

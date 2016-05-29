@@ -26,7 +26,15 @@ echo $twitter_url = get_option('twitter_url');?>
  
 <?php wp_footer(); ?>
  <script>
+<<<<<<< HEAD
  <?php echo $body_code = get_option('general_body_code');?>
+=======
+<<<<<<< HEAD
+ <?php echo $body_code = get_option('general_body_code');?>
+=======
+ <?php echo $code_body = get_option('code_body');?>
+>>>>>>> df453d3a3b4f2d3bab54a66ae71ab1014abc57dc
+>>>>>>> e114004cef74632b9fef0ceb140e30cb08205a39
  </script>
 </body>
 </html>
