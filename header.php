@@ -45,6 +45,7 @@ echo ' | ' . sprintf( __( 'Page %s', 'devtheme' ), max( $paged, $page ) );
 <script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"></script>
 <![endif]-->
 
+<<<<<<< HEAD
 <script id="head_code">
 <?php echo $head_code = get_option('general_head_code');?>
 </script>
@@ -53,6 +54,15 @@ echo ' | ' . sprintf( __( 'Page %s', 'devtheme' ), max( $paged, $page ) );
 <?php echo $ga = get_option('general_ga_code');?>
 </script>
 
+=======
+<?php echo $bootstrap = get_option('bootstrap');?>
+
+<script>
+<?php echo $code_head = get_option('code_head');?>
+</script>
+
+
+>>>>>>> df453d3a3b4f2d3bab54a66ae71ab1014abc57dc
 <?php wp_head(); ?>
 </head>
  
