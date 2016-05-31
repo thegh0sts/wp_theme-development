@@ -1,4 +1,12 @@
 <?php 
+
+function theme_options_enqueue() {
+    wp_register_style( 'theme-options-css', get_template_directory() . '/admin/theme-options.css' , false, NULL, 'all' );
+	
+    wp_enqueue_style( 'theme-options-css' );
+}
+add_action( 'wp_enqueue_scripts', 'theme_options_enqueue' );
+
 add_action('admin_menu', 'ch_essentials_admin');
 function ch_essentials_admin() {
     /* Base Menu */
@@ -213,7 +221,7 @@ function theme_options_index() {
                 $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'all_general_settings_page';  
         ?>  
 
-        <h2 class="nav-tab-wrapper" style="border:3px solid blue">  
+        <h2 class="nav-tab-wrapper" style="">  
             <a href="?page=theme-options&tab=all_general_settings_page" class="nav-tab <?php echo $active_tab == 'all_general_settings_page' ? 'nav-tab-active' : ''; ?>">General Options</a>  
             <a href="?page=theme-options&tab=all_responsive_settings_page" class="nav-tab <?php echo $active_tab == 'all_responsive_settings_page' ? 'nav-tab-active' : ''; ?>">Responsive / Layout Options</a>  
 			<a href="?page=theme-options&tab=all_extra_settings_page" class="nav-tab <?php echo $active_tab == 'all_extra_settings_page' ? 'nav-tab-active' : ''; ?>">Extra Options</a>  
