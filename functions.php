@@ -127,6 +127,9 @@ function bootstrap_enqueue() {
 }
 add_action( 'wp_enqueue_scripts', 'bootstrap_enqueue' );
 
+
+
+
 //
 // Setup the WordPress core custom background feature.
 //

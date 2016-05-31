@@ -1,11 +1,9 @@
 <?php 
-
-function theme_options_enqueue() {
-    wp_register_style( 'theme-options-css', get_template_directory() . '/admin/theme-options.css' , false, NULL, 'all' );
-	
-    wp_enqueue_style( 'theme-options-css' );
+function load_custom_wp_admin_style() {
+        wp_register_style( 'custom_wp_admin_css', get_template_directory_uri() . '/admin/theme-options.css', false, '1.0.0' );
+        wp_enqueue_style( 'custom_wp_admin_css' );
 }
-add_action( 'wp_enqueue_scripts', 'theme_options_enqueue' );
+add_action( 'admin_enqueue_scripts', 'load_custom_wp_admin_style' );
 
 add_action('admin_menu', 'ch_essentials_admin');
 function ch_essentials_admin() {
@@ -221,13 +219,15 @@ function theme_options_index() {
                 $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'all_general_settings_page';  
         ?>  
 
-        <h2 class="nav-tab-wrapper" style="">  
-            <a href="?page=theme-options&tab=all_general_settings_page" class="nav-tab <?php echo $active_tab == 'all_general_settings_page' ? 'nav-tab-active' : ''; ?>">General Options</a>  
-            <a href="?page=theme-options&tab=all_responsive_settings_page" class="nav-tab <?php echo $active_tab == 'all_responsive_settings_page' ? 'nav-tab-active' : ''; ?>">Responsive / Layout Options</a>  
-			<a href="?page=theme-options&tab=all_extra_settings_page" class="nav-tab <?php echo $active_tab == 'all_extra_settings_page' ? 'nav-tab-active' : ''; ?>">Extra Options</a>  
-        </h2>  
-
-
+       
+<div class="menu_simple">
+			<ul >
+			<li><a href="?page=theme-options&tab=all_general_settings_page" <!--class="nav-tab--> <?php echo $active_tab == 'all_general_settings_page' ? 'nav-tab-active' : ''; ?>">General Options</a>  </li>
+            <li><a href="?page=theme-options&tab=all_responsive_settings_page" <!--class="nav-tab--> <?php echo $active_tab == 'all_responsive_settings_page' ? 'nav-tab-active' : ''; ?>">Responsive / Layout Options</a>  </li>
+			<li><a href="?page=theme-options&tab=all_extra_settings_page" <!--class="nav-tab--> <?php echo $active_tab == 'all_extra_settings_page' ? 'nav-tab-active' : ''; ?>">Extra Options</a> </li>
+			</ul>
+				<div style="border:1px solid red;">
+				
         <form method="post" action="options.php">  
 
             <?php 
@@ -246,7 +246,8 @@ function theme_options_index() {
             ?>             
             <?php submit_button(); ?>  
         </form> 
-
+		</div>
+</div>
     </div> 
 <?php
 }
